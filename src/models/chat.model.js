@@ -25,7 +25,7 @@ const chatSchema = new Schema(
             }
         ],
 
-        messsages : [messageSchema],
+        messages : [messageSchema],
         isAutomatedBotChat : {
             type : Boolean ,
             default : false 
