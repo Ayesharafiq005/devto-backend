@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
+import articleRouter from "./routes/article.routes.js";
+
 
 dotenv.config({
   path: "./.env",
@@ -21,5 +23,8 @@ app.use(
 );
 
 app.use("/api/v1/users", userRouter);
+
+app.use("/api/v1/articles", articleRouter);
+
 
 export { app };
