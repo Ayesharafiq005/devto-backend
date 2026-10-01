@@ -14,7 +14,7 @@ const createArticle = asyncHandler(async(req, res) => {
         title,
         content,
         tags: Array.isArray(tags) ? tags : [],
-        coverImage : coverIamge || "",
+        coverImage : coverImage || "",
         author : req.user._id
     });
 

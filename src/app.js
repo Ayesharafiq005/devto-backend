@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import articleRouter from "./routes/article.routes.js";
 
+import commentRouter from "./routes/comment.routes.js";
+import likeRouter from "./routes/like.routes.js";
 
 dotenv.config({
   path: "./.env",
@@ -26,5 +28,7 @@ app.use("/api/v1/users", userRouter);
 
 app.use("/api/v1/articles", articleRouter);
 
+app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/likes", likeRouter);
 
 export { app };

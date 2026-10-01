@@ -9,7 +9,6 @@ const articleSchema = new Schema(
         },
         slug : {
             type : String,
-            required : true,
             trim : true,
             index : true,
             unique : true,
@@ -48,18 +47,21 @@ const articleSchema = new Schema(
 );
 
 
-articleSchema.pre("validate", function(){
-    if(this.title && !this.slug ){
-        this.slug == this.title
-        .toLowerCase()
+articleSchema.pre("save", async function () {
+  if (this.isModified("title") || !this.slug) {
+    const slugBase = this.title
+      .toLowerCase()
       .replace(/[^a-zA-Z0-9 ]/g, "")
-      .replace(/\s+/g, "-") + `-${Date.now()}`;
-    }
+      .trim()
+      .replace(/\s+/g, "-");
+    
+    this.slug = `${slugBase}-${Date.now()}`;
+  }
 
-    if(this.content){
-        const words = this.content.trim().split(/\s+/).length;
-        this.readingTime = Math.ceil(words / 200) || 1;
-    }
+  if (this.isModified("content")) {
+    const words = this.content.trim().split(/\s+/).length;
+    this.readingTime = Math.ceil(words / 200) || 1;
+  }
 });
 
 export const Article = mongoose.model("Article", articleSchema);
