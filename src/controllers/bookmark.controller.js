@@ -48,7 +48,7 @@ return res
 const getUserBookmarks = asyncHandler(async(req,res) => {
     const userId = req.user._id;
 
-    const bookmarks = Bookmark.find({user : userId})
+    const bookmarks = await Bookmark.find({user : userId})
     .populate({
         path : "article",
         populate : {
@@ -63,5 +63,31 @@ const getUserBookmarks = asyncHandler(async(req,res) => {
    return res.status(200)
     .json(new ApiResponse(200, bookmarkedArticle, "Reading List fetched Successfully.. "));
 })
+
+// const getUserBookmarks = asyncHandler(async (req, res) => {
+//   const userId = req.user._id;
+
+//   const bookmarks = await Bookmark.find({ user: userId })
+//     .populate({
+//       path: "article",
+//       populate: {
+//         path: "author",
+//         select: "fullName username avatar",
+//       },
+//     })
+//     .sort({ createdAt: -1 });
+
+//   const bookmarkedArticles = bookmarks.map((b) => b.article);
+
+//   return res
+//     .status(200)
+//     .json(
+//       new ApiResponse(
+//         200,
+//         bookmarkedArticles,
+//         "Reading list fetched successfully"
+//       )
+//     );
+// });
 
 export { toggleBookmark, getUserBookmarks};
